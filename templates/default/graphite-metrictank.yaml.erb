@@ -1,0 +1,69 @@
+<% if @use_cache %>
+cache:
+  type: <%= @cache_type %>
+  <% if @cache_type == "filesystem" %>
+  dir: <%= @cache_dir %>
+  <% end -%>
+  <% if @cache_type == "memcached" %>
+  memcached_servers:
+    <% @cache_servers.each do |m| %>
+    - <%= m %>
+    <% end -%>
+  <% end -%>
+<% end -%>
+finders: <% @finders.each do |f| %>
+- <%= f %>
+<% end -%>
+functions: <% @functions.each do |f| %>
+- <%= f %>
+<% end -%>
+raintank:
+  tank:
+    url: http://<%= @tank_host %>:<%= @tank_port %>/
+  es:
+    url: http://<%= @elasticsearch_host %>:<%= @elasticsearch_port %>/
+    index: <%= @index_name %>
+    cache_ttl: <%= @cache_ttl %>
+search_index: <%= @search_index %>
+time_zone: <%= @time_zone %>
+<% if @use_statsd %>
+statsd:
+  host: '<%= @statsd_host %>'
+  port: <%= @statsd_port %>
+<% end -%>
+logging:
+  version: 1
+  handlers:
+    raw:
+      level: <%= @log_level %>
+      class: logging.handlers.RotatingFileHandler
+      filename: <%= @log_dir %>/app.log
+      backupCount: 2
+      maxBytes: 536870912
+      formatter: raw
+    flask:
+      class : logging.handlers.RotatingFileHandler
+      formatter: default
+      level   : ERROR
+      filename: <%= @log_dir %>/flask.log
+      backupCount: 2
+      maxBytes: 536870912
+  loggers:
+    root:
+      handlers:
+        - raw
+      level: <%= @log_level %>
+      propagate: false
+    graphite_api:
+      handlers:
+        - raw
+      level: <%= @log_level %>
+  formatters:
+    default:
+      format: '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+  root:
+    handlers:
+      - flask
+    level: ERROR
+
