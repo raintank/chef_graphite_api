@@ -57,7 +57,7 @@ directory node['chef_graphite_api']['log_dir'] do
   action :create
 end
 
-service "graphite-raintank" do
+service "graphite-metrictank" do
   action [ :enable, :start ]
 end
 
@@ -96,7 +96,7 @@ template "/etc/graphite-metrictank.yaml" do
     cache_servers: node['chef_graphite_api']['cache_servers'],
     cache_type: node['chef_graphite_api']['cache_type']
   })
-  notifies :restart, 'service[graphite-raintank]'
+  notifies :restart, 'service[graphite-metrictank]'
 end
 
 tag("graphite-api")
