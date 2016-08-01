@@ -24,3 +24,4 @@ default[:chef_graphite_api][:cache_dir] = "/tmp/graphite-api-cache"
 default[:chef_graphite_api][:cache_servers] = ["127.0.0.1:11211"]
 default[:chef_graphite_api][:cache_type] = "filesystem"
 default[:chef_graphite_api][:metrictank][:listen] = "18763"
+default[:chef_graphite_api][:metrictank][:index_name] = "metric"
