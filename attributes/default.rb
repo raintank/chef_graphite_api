@@ -1,5 +1,5 @@
 default[:use_statsd] = true
-default[:chef_graphite_api][:finders] = [ 'graphite_raintank.RaintankFinder' ]
+default[:chef_graphite_api][:finders] = [ 'graphite_metrictank.RaintankFinder' ]
 default[:chef_graphite_api][:functions] = [ 'graphite_api.functions.SeriesFunctions', 'graphite_api.functions.PieFunctions' ]
 default[:chef_graphite_api][:cassandras] = []
 default[:chef_graphite_api][:tank_host] = "localhost"
