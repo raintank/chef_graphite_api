@@ -1,0 +1,6 @@
+import multiprocessing
+
+bind = "<%= @bind_addr %>"
+errorlog = "<%= @error_log %>"
+worker_class = "<%= @worker_class %>"
+workers = multiprocessing.cpu_count()

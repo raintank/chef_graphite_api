@@ -68,7 +68,7 @@ if cassandras.empty?
   cassandras = node['chef_graphite_api']['cassandras']
 end
 
-template "/etc/graphite-metrictank.yaml" do
+template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
   source 'graphite-metrictank.yaml.erb'
   owner 'root'
   group 'root'
@@ -95,6 +95,20 @@ template "/etc/graphite-metrictank.yaml" do
     cache_dir: node['chef_graphite_api']['cache_dir'],
     cache_servers: node['chef_graphite_api']['cache_servers'],
     cache_type: node['chef_graphite_api']['cache_type']
+  })
+  notifies :restart, 'service[graphite-metrictank]'
+end
+
+template "/etc/graphite-metrictank/gunicorn_conf.py" do
+  source 'gunicorn_conf.py.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  action :create
+  variables({
+    bind_addr: node['chef_graphite_api']['bind_addr'],
+    error_log: node['chef_graphite_api']['error_log'],
+    worker_class: node['chef_graphite_api']['worker_class']
   })
   notifies :restart, 'service[graphite-metrictank]'
 end
