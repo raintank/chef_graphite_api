@@ -19,6 +19,7 @@ finders: <% @finders.each do |f| %>
 functions: <% @functions.each do |f| %>
 - <%= f %>
 <% end -%>
+multi_tenant: <%= @multi_tenant %>
 raintank:
   tank:
     url: http://<%= @tank_host %>:<%= @tank_port %>/

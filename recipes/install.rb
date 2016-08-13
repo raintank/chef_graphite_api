@@ -21,7 +21,7 @@ packagecloud_repo node[:chef_base][:packagecloud_repo] do
   type "deb"
 end
 
-pkg_version = node['chef_graphite_api']['package_version']
+pkg_version = node['chef_graphite_api']['version']
 pkg_action = if pkg_version.nil?
   :upgrade
 else
@@ -94,7 +94,8 @@ template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
     cache_ttl: node['chef_graphite_api']['cache_ttl'],
     cache_dir: node['chef_graphite_api']['cache_dir'],
     cache_servers: node['chef_graphite_api']['cache_servers'],
-    cache_type: node['chef_graphite_api']['cache_type']
+    cache_type: node['chef_graphite_api']['cache_type'],
+    multi_tenant: node['chef_graphite_api']['multi_tenant']
   })
   notifies :restart, 'service[graphite-metrictank]'
 end

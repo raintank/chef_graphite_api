@@ -22,3 +22,4 @@ default[:chef_graphite_api][:metrictank][:index_name] = "metric"
 default[:chef_graphite_api][:bind_addr] = "0.0.0.0:8888"
 default[:chef_graphite_api][:worker_class] = "eventlet"
 default[:chef_graphite_api][:error_log] = "#{node[:chef_graphite_api][:log_dir]}/graphite-metrictank.log"
+default[:chef_graphite_api][:multi_tenant] = true
