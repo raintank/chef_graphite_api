@@ -23,10 +23,7 @@ multi_tenant: <%= @multi_tenant %>
 raintank:
   tank:
     url: http://<%= @tank_host %>:<%= @tank_port %>/
-  es:
-    url: http://<%= @elasticsearch_host %>:<%= @elasticsearch_port %>/
-    index: <%= @index_name %>
-    cache_ttl: <%= @cache_ttl %>
+  cache_ttl: <%= @cache_ttl %>
 search_index: <%= @search_index %>
 time_zone: <%= @time_zone %>
 <% if @use_statsd %>

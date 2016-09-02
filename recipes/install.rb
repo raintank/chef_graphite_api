@@ -61,12 +61,7 @@ service "graphite-metrictank" do
   action [ :enable, :start ]
 end
 
-elasticsearch_host = find_haproxy || node['chef_graphite_api']['elasticsearch_host']
 tank_host = find_haproxy || node['chef_graphite_api']['tank_host']
-cassandras = find_cassandras
-if cassandras.empty?
-  cassandras = node['chef_graphite_api']['cassandras']
-end
 
 template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
   source 'graphite-metrictank.yaml.erb'
@@ -80,8 +75,6 @@ template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
     cassandras: cassandras,
     tank_host: tank_host,
     tank_port: node['chef_graphite_api']['metrictank']['listen'].sub(/^:/, ""),
-    elasticsearch_host: elasticsearch_host,
-    elasticsearch_port: node['chef_graphite_api']['elasticsearch_port'],
     search_index: node['chef_graphite_api']['search_index'],
     time_zone: node['chef_graphite_api']['time_zone'],
     use_statsd: node['use_statsd'],
