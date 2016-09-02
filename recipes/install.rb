@@ -72,7 +72,6 @@ template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
   variables({
     finders: node['chef_graphite_api']['finders'],
     functions: node['chef_graphite_api']['functions'],
-    cassandras: cassandras,
     tank_host: tank_host,
     tank_port: node['chef_graphite_api']['metrictank']['listen'].sub(/^:/, ""),
     search_index: node['chef_graphite_api']['search_index'],
