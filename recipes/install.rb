@@ -98,8 +98,15 @@ conf_source = 'default.erb'
 case node["platform"]
 when "ubuntu"
   if node["platform_version"].to_f >= 15.04
-    conf_tmpl = "/etc/system/systemd/graphite-metrictank.service.d/metricank.conf"
+    conf_tmpl = "/etc/systemd/system/graphite-metrictank.service.d/metricank.conf"
     conf_source = 'systemd.erb'
+    directory '/etc/systemd/system/graphite-metrictank.service.d' do
+      owner "root"
+      group "root"
+      mode "0755"
+      recursive true
+      action :create
+    end
   end
 end
 
