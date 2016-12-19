@@ -118,7 +118,7 @@ end
 
 cron "graphite-metrictank-logs" do
   time :hourly
-  command "/usr/bin/find #{node['chef_graphite_api']['log_dir']} -mtime +1 -iname \"acess.log.*\" -exec rm {} \\;"
+  command "/usr/bin/find #{node['chef_graphite_api']['log_dir']} -mtime +1 -iname \"access.log.*\" -exec rm {} \\;"
 end
 
 tag("graphite-api")
