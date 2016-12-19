@@ -92,18 +92,29 @@ template "/etc/graphite-metrictank/graphite-metrictank.yaml" do
   notifies :restart, 'service[graphite-metrictank]'
 end
 
-template "/etc/graphite-metrictank/gunicorn_conf.py" do
-  source 'gunicorn_conf.py.erb'
+conf_tmpl = '/etc/default/graphite-metrictank'
+conf_source = 'default.erb'
+
+case node["platform"]
+when "ubuntu"
+  if node["platform_version"].to_f >= 15.04
+    conf_tmpl = "/etc/system/systemd/graphite-metrictank.service.d/metricank.conf"
+    conf_source = 'systemd.erb'
+  end
+end
+
+template conf_tmpl do
+  source conf_source
   owner 'root'
   group 'root'
   mode '0644'
   action :create
   variables({
     bind_addr: node['chef_graphite_api']['bind_addr'],
-    error_log: node['chef_graphite_api']['error_log'],
-    worker_class: node['chef_graphite_api']['worker_class']
+    access_log: "#{node['chef_graphite_api']['log_dir']}/access.log",
   })
   notifies :restart, 'service[graphite-metrictank]'
 end
+
 
 tag("graphite-api")

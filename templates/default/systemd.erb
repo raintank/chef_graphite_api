@@ -1,0 +1,4 @@
+# managed by chef -- changes to this file will be overwritten
+[Service]
+ExecStart=
+ExecStart=/usr/share/python/graphite/bin/twist web --notracebacks --wsgi=graphite_api.app.app -p <%= @bind_addr %> -l <%= @access_log %>
